@@ -1,12 +1,41 @@
 import {async, TestBed} from "@angular/core/testing";
 import {AppComponent} from "./app.component";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
-import {Product} from "./model/product";
+import {ProductService} from "./product-component/pruduct-service.service";
+import {HttpClientModule} from "@angular/common/http";
+import {BrowserModule} from "@angular/platform-browser";
+import {SortTablePipe} from "./pipe/sort-table.pipe";
+import {CustomerService} from "./customer/customer-service.service";
+import {APP_BASE_HREF} from "@angular/common";
+import {RouterModule} from "@angular/router";
+import {HomeComponent} from "./home/home.component";
+import {BasketComponent} from "./basket/basket.component";
+import {MenuComponent} from "./menu/menu.component";
+import {ProductComponent} from "./product-component/product-component.component";
+import {FormsModule} from "@angular/forms";
 describe('AppComponent', () => {
+
+  const title : string = "Welcome to OUI.SNCF.COM";
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        MenuComponent,
+        ProductComponent,
+        HomeComponent,
+        BasketComponent
+      ],
+      providers: [ProductService,
+        CustomerService,
+        SortTablePipe,
+        {provide: 'title', useValue: title},
+        {provide: APP_BASE_HREF, useValue : ""}],
+      imports: [
+        BrowserModule,
+        HttpClientModule,
+        RouterModule.forRoot([], {useHash: true}),
+        FormsModule
       ],
       schemas : [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
@@ -16,33 +45,5 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  it(`should have as total `, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.total).toEqual(0);
-  }));
-  it('should render title in a p tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('p').textContent).toContain('Votre panier s\'élève à');
-  }));
- /* it('should updatePrice', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
 
-    let productCompo = compiled.querySelector('app-product-component');
-    let product = new Product();
-    product.title = "test_product";
-    product.description="this is a test product";
-    product.photo = "";
-    product.price = 100;
-    productCompo.data = product;
-    productCompo.querySelector('button').click();
-
-    const app = fixture.debugElement.componentInstance;
-    expect(app.total).toEqual(100);
-
-  }) )*/
 });

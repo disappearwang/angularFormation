@@ -2,32 +2,11 @@
 
 <div class="container">
 
-  <header class="jumbotron hero-spacer">
-    <h1>{{getTitle()}}</h1>
-    <p>Votre panier s'élève à {{getTotal() | currency:"EUR":true}}</p>
-    <button class="btn btn-primary" (click)="cartHandler()">Voir mon panier</button>
-  </header>
 
-  <hr>
+  <router-outlet></router-outlet>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <h2>Derniers Produits</h2>
-    </div>
-  </div>
+  <app-footer></app-footer>
 
-  <ng-template ngFor [ngForOf]="products" let-item>
-    <ng-template [ngIf]="hasStock(item)">
-      <app-product-component [data]="item" (addToBasket)="basketHandler($event)"></app-product-component>
-    </ng-template>
-  </ng-template>
-
-
-  <hr>
-
-  <footer>
-    Copyright &copy; Your Website 2016
-  </footer>
 
 </div>
 
